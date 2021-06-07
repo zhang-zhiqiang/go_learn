@@ -2,6 +2,7 @@ package go_learn
 
 import (
     "database/sql"
+    "github.com/pkg/errors"
     "log"
 )
 
@@ -29,6 +30,6 @@ func (this *DB) Query(sqlStr string, vals ...interface{}) (result []map[string]s
 
 func (this *DB) errorHandler() {
     if this.err != nil && this.err != sql.ErrNoRows {
-        log.Fatal(this.err)
+        errors.Wrap(this.err, "db : sql执行异常")
     }
 }
